@@ -14,6 +14,19 @@ void Elections::addCandidate(const string &candidate)
     votesWithDistricts["District 3"].push_back(0);
 }
 
+void Elections::recordVoteWithoutDistrict2(const string& candidate) 
+{
+    const bool candidateFoundInCandidates = (count(candidates.begin(), candidates.end(), candidate) > 0);
+    if (candidateFoundInCandidates)
+    {
+        recordVoteWithoutDistrict(candidate);
+    }
+    else
+    {
+        recordVoteWithoutDistrictForCandidateNotFound(candidate);
+    }
+}
+
 void Elections::recordVoteWithoutDistrict(const string &candidate)
 {
     int index = find(candidates.begin(), candidates.end(), candidate) - candidates.begin();
@@ -61,15 +74,7 @@ void Elections::voteFor(const string &elector, const string &candidate, const st
 {
     if (!withDistrict)
     {
-        const bool candidateFoundInCandidates = (count(candidates.begin(), candidates.end(), candidate) > 0);
-        if (candidateFoundInCandidates)
-        {
-            recordVoteWithoutDistrict(candidate);
-        }
-        else
-        {
-            recordVoteWithoutDistrictForCandidateNotFound(candidate);
-        }
+        recordVoteWithoutDistrict2(candidate);
     }
     else
     {
