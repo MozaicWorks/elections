@@ -20,6 +20,12 @@ void Elections::recordVoteWithoutDistrict(const string &candidate)
     votesWithoutDistricts[index] = votesWithoutDistricts[index] + 1;
 }
 
+void Elections::recordVoteWithoutDistrictForCandidateNotFound(const string &candidate)
+{
+    candidates.push_back(candidate);
+    votesWithoutDistricts.push_back(1);
+}
+
 void Elections::voteFor(const string &elector, const string &candidate, const string &electorDistrict)
 {
     if (!withDistrict)
@@ -31,8 +37,7 @@ void Elections::voteFor(const string &elector, const string &candidate, const st
         }
         else
         {
-            candidates.push_back(candidate);
-            votesWithoutDistricts.push_back(1);
+            recordVoteWithoutDistrictForCandidateNotFound(candidate);
         }
     }
     else

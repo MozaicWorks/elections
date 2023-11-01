@@ -25,4 +25,5 @@ public:
 
 private:
 	void recordVoteWithoutDistrict(const string &);
+	void recordVoteWithoutDistrictForCandidateNotFound(const string &);
 };
