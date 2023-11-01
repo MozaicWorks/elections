@@ -100,6 +100,11 @@ string Elections::computeAndFormatAbstentionData(const int nbVotes) const
     return format(abstentionResult);
 }
 
+int Elections::totalNumberOfVotesForElectionsWithoutDistricts() const
+{
+    return accumulate(votesWithoutDistricts.begin(), votesWithoutDistricts.end(), 0);
+}
+
 map<string, string> Elections::results() const
 {
     map<string, string> results;
@@ -110,7 +115,7 @@ map<string, string> Elections::results() const
 
     if (!withDistrict)
     {
-        nbVotes = accumulate(votesWithoutDistricts.begin(), votesWithoutDistricts.end(), 0);
+        nbVotes = totalNumberOfVotesForElectionsWithoutDistricts();
         for (int i = 0; i < officialCandidates.size(); i++)
         {
             int index = find(candidates.begin(), candidates.end(), officialCandidates[i]) - candidates.begin();

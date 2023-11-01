@@ -38,6 +38,8 @@ private:
 	string computeAndFormatVotesPercentageOfCategory(const int blankVotes, const int nbVotes) const;
 	string computeAndFormatAbstentionData(const int nbVotes) const;
 
+	int totalNumberOfVotesForElectionsWithoutDistricts() const;
+
 	string format(const auto &param) const
 	{
 		// This function is only needed if std::format is not implemented in your standard library
