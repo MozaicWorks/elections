@@ -17,9 +17,12 @@ private:
 public:
 	Elections(const map<string, vector<string>> &list, bool withDistrict) : list(list), withDistrict(withDistrict), votesWithDistricts(){};
 
-	void addCandidate(const string& candidate);
+	void addCandidate(const string &candidate);
 
 	void voteFor(const string &elector, const string &candidate, const string &electorDistrict);
 
 	map<string, string> results() const;
+
+private:
+	void doSomethingWhenCandidateFoundInCandidates(const string &);
 };
