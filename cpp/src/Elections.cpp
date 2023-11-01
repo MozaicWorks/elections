@@ -130,6 +130,21 @@ int Elections::totalNumberOfVotesForElectionsWithDistricts() const
     return nbVotes;
 }
 
+int Elections::numberOfValidVotesForElectionsWithDistricts() const
+{
+    int nbValidVotes = 0;
+    for (int i = 0; i < officialCandidates.size(); i++)
+    {
+        int index = find(candidates.begin(), candidates.end(), officialCandidates[i]) - candidates.begin();
+        for (auto entry : votesWithDistricts)
+        {
+            vector<int> districtVotes = entry.second;
+            nbValidVotes += districtVotes[index];
+        }
+    }
+    return nbValidVotes;
+}
+
 map<string, string> Elections::results() const
 {
     map<string, string> results;
@@ -167,16 +182,7 @@ map<string, string> Elections::results() const
     else
     {
         nbVotes = totalNumberOfVotesForElectionsWithDistricts();
-
-        for (int i = 0; i < officialCandidates.size(); i++)
-        {
-            int index = find(candidates.begin(), candidates.end(), officialCandidates[i]) - candidates.begin();
-            for (auto entry : votesWithDistricts)
-            {
-                vector<int> districtVotes = entry.second;
-                nbValidVotes += districtVotes[index];
-            }
-        }
+        nbValidVotes = numberOfValidVotesForElectionsWithDistricts();
 
         map<string, int> officialCandidatesResult;
         for (int i = 0; i < officialCandidates.size(); i++)

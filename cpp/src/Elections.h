@@ -42,6 +42,7 @@ private:
 	int numberOfValidVotesForElectionsWithoutDistricts() const;
 
 	int totalNumberOfVotesForElectionsWithDistricts() const;
+	int numberOfValidVotesForElectionsWithDistricts() const;
 
 	string format(const auto &param) const
 	{
