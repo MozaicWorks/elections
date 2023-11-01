@@ -189,7 +189,6 @@ map<string, string> Elections::results() const
         }
     }
 
-    float blankResult = ((float)blankVotes * 100) / nbVotes;
     results["Blank"] = formatBlankResults(blankVotes, nbVotes);
 
     float nullResult = ((float)nullVotes * 100) / nbVotes;
