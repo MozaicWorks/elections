@@ -4,7 +4,7 @@
 #include <sstream>
 #include <iomanip>
 
-void Elections::addCandidate(string candidate)
+void Elections::addCandidate(const string& candidate)
 {
     officialCandidates.push_back(candidate);
     candidates.push_back(candidate);
