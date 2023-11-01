@@ -14,7 +14,7 @@ void Elections::addCandidate(string candidate)
     votesWithDistricts["District 3"].push_back(0);
 }
 
-void Elections::voteFor(string elector, string candidate, string electorDistrict)
+void Elections::voteFor(const string& elector, const string& candidate, const string& electorDistrict)
 {
     if (!withDistrict)
     {
