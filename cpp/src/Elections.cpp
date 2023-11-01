@@ -42,7 +42,8 @@ void Elections::voteFor(const string &elector, const string &candidate, const st
     }
     else
     {
-        if (votesWithDistricts.contains(electorDistrict))
+        const bool existentDistrict = (votesWithDistricts.contains(electorDistrict));
+        if (existentDistrict)
         {
             vector<int> &districtVotes = votesWithDistricts[electorDistrict];
             if (count(candidates.begin(), candidates.end(), candidate) > 0)
