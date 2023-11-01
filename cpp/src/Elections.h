@@ -40,6 +40,8 @@ private:
 
 	int totalNumberOfVotesForElectionsWithoutDistricts() const;
 
+	int totalNumberOfVotesForElectionsWithDistricts() const;
+
 	string format(const auto &param) const
 	{
 		// This function is only needed if std::format is not implemented in your standard library

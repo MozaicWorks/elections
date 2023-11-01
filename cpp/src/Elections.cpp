@@ -105,6 +105,19 @@ int Elections::totalNumberOfVotesForElectionsWithoutDistricts() const
     return accumulate(votesWithoutDistricts.begin(), votesWithoutDistricts.end(), 0);
 }
 
+int Elections::totalNumberOfVotesForElectionsWithDistricts() const
+{
+    int nbVotes = 0;
+    for (auto entry : votesWithDistricts)
+    {
+        vector<int> districtVotes = entry.second;
+        int nbVotesPerDistrict = accumulate(districtVotes.begin(), districtVotes.end(), 0);
+        nbVotes += nbVotesPerDistrict;
+    }
+
+    return nbVotes;
+}
+
 map<string, string> Elections::results() const
 {
     map<string, string> results;
@@ -145,12 +158,7 @@ map<string, string> Elections::results() const
     }
     else
     {
-        for (auto entry : votesWithDistricts)
-        {
-            vector<int> districtVotes = entry.second;
-            int nbVotesPerDistrict = accumulate(districtVotes.begin(), districtVotes.end(), 0);
-            nbVotes += nbVotesPerDistrict;
-        }
+        nbVotes = totalNumberOfVotesForElectionsWithDistricts();
 
         for (int i = 0; i < officialCandidates.size(); i++)
         {
