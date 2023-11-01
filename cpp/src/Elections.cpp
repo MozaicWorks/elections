@@ -86,6 +86,20 @@ string Elections::computeAndFormatVotesPercentageOfCategory(const int votesOfACa
     return format(percentageResult);
 }
 
+string Elections::computeAndFormatAbstentionData(const int nbVotes) const
+{
+    vector<vector<string>> values;
+    transform(list.begin(), list.end(), back_inserter(values), [](const auto &val)
+              { return val.second; });
+
+    vector<int> sizes;
+    transform(values.begin(), values.end(), back_inserter(sizes), [](const auto &v)
+              { return v.size(); });
+    int nbElectors = accumulate(sizes.begin(), sizes.end(), 0);
+    float abstentionResult = 100 - ((float)nbVotes * 100 / nbElectors);
+    return format(abstentionResult);
+}
+
 map<string, string> Elections::results() const
 {
     map<string, string> results;
@@ -190,20 +204,8 @@ map<string, string> Elections::results() const
     }
 
     results["Blank"] = computeAndFormatVotesPercentageOfCategory(blankVotes, nbVotes);
-
-    float nullResult = ((float)nullVotes * 100) / nbVotes;
-    results["Null"] = format(nullResult);
-
-    vector<vector<string>> values;
-    transform(list.begin(), list.end(), back_inserter(values), [](const auto &val)
-              { return val.second; });
-
-    vector<int> sizes;
-    transform(values.begin(), values.end(), back_inserter(sizes), [](const auto &v)
-              { return v.size(); });
-    int nbElectors = accumulate(sizes.begin(), sizes.end(), 0);
-    float abstentionResult = 100 - ((float)nbVotes * 100 / nbElectors);
-    results["Abstention"] = format(abstentionResult);
+    results["Null"] = computeAndFormatVotesPercentageOfCategory(nullVotes, nbVotes);
+    results["Abstention"] = computeAndFormatAbstentionData(nbVotes);
 
     return results;
 }
