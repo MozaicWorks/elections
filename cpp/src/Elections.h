@@ -39,6 +39,7 @@ private:
 	string computeAndFormatAbstentionData(const int nbVotes) const;
 
 	int totalNumberOfVotesForElectionsWithoutDistricts() const;
+	int numberOfValidVotesForElectionsWithoutDistricts() const;
 
 	int totalNumberOfVotesForElectionsWithDistricts() const;
 
