@@ -42,6 +42,21 @@ void Elections::recordVoteWithDistrictAndCandidateNotFound(const string &candida
     districtVotes[candidates.size() - 1] = districtVotes[candidates.size() - 1] + 1;
 }
 
+void Elections::recordVoteWithExistingDistrict(const string &candidate, const string &electorDistrict)
+{
+    vector<int> &districtVotes = votesWithDistricts[electorDistrict];
+    const bool candidateFoundInCandidates = (count(candidates.begin(), candidates.end(), candidate) > 0);
+
+    if (candidateFoundInCandidates)
+    {
+        recordVoteWithDistrict(candidate, districtVotes);
+    }
+    else
+    {
+        recordVoteWithDistrictAndCandidateNotFound(candidate, districtVotes);
+    }
+}
+
 void Elections::voteFor(const string &elector, const string &candidate, const string &electorDistrict)
 {
     if (!withDistrict)
@@ -58,21 +73,7 @@ void Elections::voteFor(const string &elector, const string &candidate, const st
     }
     else
     {
-        const bool existentDistrict = (votesWithDistricts.contains(electorDistrict));
-        if (existentDistrict)
-        {
-            vector<int> &districtVotes = votesWithDistricts[electorDistrict];
-            const bool candidateFoundInCandidates = (count(candidates.begin(), candidates.end(), candidate) > 0);
-
-            if (candidateFoundInCandidates)
-            {
-                recordVoteWithDistrict(candidate, districtVotes);
-            }
-            else
-            {
-                recordVoteWithDistrictAndCandidateNotFound(candidate, districtVotes);
-            }
-        }
+        recordVoteWithExistingDistrict(candidate, electorDistrict);
     }
 }
 
