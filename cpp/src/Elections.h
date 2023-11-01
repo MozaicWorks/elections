@@ -35,7 +35,7 @@ private:
 	void recordVoteForExistingCandidateInElectionWithDistrict(const string &, vector<int> &) const;
 	void recordVoteForNewCandidateInElectionWithDistrict(const string &, vector<int> &);
 
-	string formatBlankResults(const int blankVotes, const int nbVotes) const;
+	string computeAndFormatVotesPercentageOfCategory(const int blankVotes, const int nbVotes) const;
 
 	string format(const auto &param) const
 	{

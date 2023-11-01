@@ -80,10 +80,10 @@ void Elections::voteFor(const string &elector, const string &candidate, const st
     }
 }
 
-string Elections::formatBlankResults(const int blankVotes, const int nbVotes) const
+string Elections::computeAndFormatVotesPercentageOfCategory(const int votesOfACategory, const int totalNumberOfVotes) const
 {
-    float blankResult = ((float)blankVotes * 100) / nbVotes;
-    return format(blankResult);
+    float percentageResult = ((float)votesOfACategory * 100) / totalNumberOfVotes;
+    return format(percentageResult);
 }
 
 map<string, string> Elections::results() const
@@ -189,7 +189,7 @@ map<string, string> Elections::results() const
         }
     }
 
-    results["Blank"] = formatBlankResults(blankVotes, nbVotes);
+    results["Blank"] = computeAndFormatVotesPercentageOfCategory(blankVotes, nbVotes);
 
     float nullResult = ((float)nullVotes * 100) / nbVotes;
     results["Null"] = format(nullResult);
