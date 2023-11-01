@@ -24,10 +24,11 @@ public:
 	map<string, string> results() const;
 
 private:
-	void recordVoteWithoutDistrict(const string &);
-	void recordVoteWithoutDistrictForCandidateNotFound(const string &);
-	void recordVoteWithDistrict(const string &, vector<int> &) const;
-	void recordVoteWithDistrictAndCandidateNotFound(const string &, vector<int> &);
-	void recordVoteWithExistingDistrict(const string &, const string &);
-	void recordVoteWithoutDistrict2(const string &);
+	void recordVoteForElectionWithoutDistrict(const string &);
+	void recordVoteForExistingCandidateInNoDistrictElections(const string &);
+	void recordVoteForNewCandidateInNoDistrictElections(const string &);
+
+	void recordVoteForElectionWithDistricts(const string &, const string &);
+	void recordVoteForExistingCandidateInElectionWithDistrict(const string &, vector<int> &) const;
+	void recordVoteForNewCandidateInElectionWithDistrict(const string &, vector<int> &);
 };
