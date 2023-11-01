@@ -52,7 +52,7 @@ void Elections::voteFor(const string& elector, const string& candidate, const st
     }
 }
 
-map<string, string> Elections::results()
+map<string, string> Elections::results() const
 {
     auto format = [](const auto &param)
     {

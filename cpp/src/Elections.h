@@ -21,5 +21,5 @@ public:
 
 	void voteFor(const string &elector, const string &candidate, const string &electorDistrict);
 
-	map<string, string> results();
+	map<string, string> results() const;
 };
