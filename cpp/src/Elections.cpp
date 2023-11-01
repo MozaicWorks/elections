@@ -4,7 +4,7 @@
 #include <sstream>
 #include <iomanip>
 
-void Elections::addCandidate(const string& candidate)
+void Elections::addCandidate(const string &candidate)
 {
     officialCandidates.push_back(candidate);
     candidates.push_back(candidate);
@@ -14,11 +14,12 @@ void Elections::addCandidate(const string& candidate)
     votesWithDistricts["District 3"].push_back(0);
 }
 
-void Elections::voteFor(const string& elector, const string& candidate, const string& electorDistrict)
+void Elections::voteFor(const string &elector, const string &candidate, const string &electorDistrict)
 {
     if (!withDistrict)
     {
-        if (count(candidates.begin(), candidates.end(), candidate) > 0)
+        const bool candidateFoundInCandidates = (count(candidates.begin(), candidates.end(), candidate) > 0);
+        if (candidateFoundInCandidates)
         {
             int index = find(candidates.begin(), candidates.end(), candidate) - candidates.begin();
             votesWithoutDistricts[index] = votesWithoutDistricts[index] + 1;
@@ -33,7 +34,7 @@ void Elections::voteFor(const string& elector, const string& candidate, const st
     {
         if (votesWithDistricts.contains(electorDistrict))
         {
-            vector<int>& districtVotes = votesWithDistricts[electorDistrict];
+            vector<int> &districtVotes = votesWithDistricts[electorDistrict];
             if (count(candidates.begin(), candidates.end(), candidate) > 0)
             {
                 int index = find(candidates.begin(), candidates.end(), candidate) - candidates.begin();
@@ -63,7 +64,7 @@ map<string, string> Elections::results() const
         string result = s.str();
         // HACK: This is a hack to simulate the fr-FR locale
         // We know that only numbers need to be formatted with "," instead of ".", so just replace them
-        replace(result.begin(), result.end(), '.', ',' );
+        replace(result.begin(), result.end(), '.', ',');
         return result;
     };
 
@@ -169,7 +170,7 @@ map<string, string> Elections::results() const
     }
 
     float blankResult = ((float)blankVotes * 100) / nbVotes;
-    results["Blank"] = format( blankResult);
+    results["Blank"] = format(blankResult);
 
     float nullResult = ((float)nullVotes * 100) / nbVotes;
     results["Null"] = format(nullResult);
