@@ -26,6 +26,12 @@ void Elections::recordVoteWithoutDistrictForCandidateNotFound(const string &cand
     votesWithoutDistricts.push_back(1);
 }
 
+void Elections::recordVoteWithDistrict(const string &candidate, vector<int> &districtVotes) const
+{
+    int index = find(candidates.begin(), candidates.end(), candidate) - candidates.begin();
+    districtVotes[index] = districtVotes[index] + 1;
+}
+
 void Elections::voteFor(const string &elector, const string &candidate, const string &electorDistrict)
 {
     if (!withDistrict)
@@ -50,8 +56,7 @@ void Elections::voteFor(const string &elector, const string &candidate, const st
 
             if (candidateFoundInCandidates)
             {
-                int index = find(candidates.begin(), candidates.end(), candidate) - candidates.begin();
-                districtVotes[index] = districtVotes[index] + 1;
+                recordVoteWithDistrict(candidate, districtVotes);
             }
             else
             {
