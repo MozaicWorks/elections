@@ -27,4 +27,5 @@ private:
 	void recordVoteWithoutDistrict(const string &);
 	void recordVoteWithoutDistrictForCandidateNotFound(const string &);
 	void recordVoteWithDistrict(const string &, vector<int> &) const;
+	void recordVoteWithDistrictAndCandidateNotFound(const string &, vector<int> &);
 };
