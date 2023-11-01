@@ -24,5 +24,5 @@ public:
 	map<string, string> results() const;
 
 private:
-	void doSomethingWhenCandidateFoundInCandidates(const string &);
+	void recordVoteWithoutDistrict(const string &);
 };

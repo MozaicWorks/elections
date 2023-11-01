@@ -14,7 +14,7 @@ void Elections::addCandidate(const string &candidate)
     votesWithDistricts["District 3"].push_back(0);
 }
 
-void Elections::doSomethingWhenCandidateFoundInCandidates(const string &candidate)
+void Elections::recordVoteWithoutDistrict(const string &candidate)
 {
     int index = find(candidates.begin(), candidates.end(), candidate) - candidates.begin();
     votesWithoutDistricts[index] = votesWithoutDistricts[index] + 1;
@@ -27,7 +27,7 @@ void Elections::voteFor(const string &elector, const string &candidate, const st
         const bool candidateFoundInCandidates = (count(candidates.begin(), candidates.end(), candidate) > 0);
         if (candidateFoundInCandidates)
         {
-            doSomethingWhenCandidateFoundInCandidates(candidate);
+            recordVoteWithoutDistrict(candidate);
         }
         else
         {
