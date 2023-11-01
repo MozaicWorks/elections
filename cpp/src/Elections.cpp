@@ -1,8 +1,6 @@
 ﻿#include "Elections.h"
 #include <algorithm>
 #include <numeric>
-#include <sstream>
-#include <iomanip>
 
 void Elections::addCandidate(const string &candidate)
 {
@@ -82,21 +80,14 @@ void Elections::voteFor(const string &elector, const string &candidate, const st
     }
 }
 
+string Elections::formatBlankResults(const int blankVotes, const int nbVotes) const
+{
+    float blankResult = ((float)blankVotes * 100) / nbVotes;
+    return format(blankResult);
+}
+
 map<string, string> Elections::results() const
 {
-    auto format = [](const auto &param)
-    {
-        // This function is only needed if std::format is not implemented in your standard library
-        // or if the locale support doesn't allow usage of fr-FR
-        ostringstream s;
-        s << std::fixed << std::setprecision(2) << param << "%";
-        string result = s.str();
-        // HACK: This is a hack to simulate the fr-FR locale
-        // We know that only numbers need to be formatted with "," instead of ".", so just replace them
-        replace(result.begin(), result.end(), '.', ',');
-        return result;
-    };
-
     map<string, string> results;
     int nbVotes = 0;
     int nullVotes = 0;
@@ -199,7 +190,7 @@ map<string, string> Elections::results() const
     }
 
     float blankResult = ((float)blankVotes * 100) / nbVotes;
-    results["Blank"] = format(blankResult);
+    results["Blank"] = formatBlankResults(blankVotes, nbVotes);
 
     float nullResult = ((float)nullVotes * 100) / nbVotes;
     results["Null"] = format(nullResult);
