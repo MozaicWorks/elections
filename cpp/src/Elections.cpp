@@ -46,8 +46,8 @@ void Elections::voteFor(const string &elector, const string &candidate, const st
         if (existentDistrict)
         {
             vector<int> &districtVotes = votesWithDistricts[electorDistrict];
-
             const bool candidateFoundInCandidates = (count(candidates.begin(), candidates.end(), candidate) > 0);
+
             if (candidateFoundInCandidates)
             {
                 int index = find(candidates.begin(), candidates.end(), candidate) - candidates.begin();
