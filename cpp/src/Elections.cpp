@@ -72,13 +72,13 @@ void Elections::recordVoteForElectionWithDistricts(const string &candidate, cons
 
 void Elections::voteFor(const string &elector, const string &candidate, const string &electorDistrict)
 {
-    if (!withDistrict)
+    if (withDistrict)
     {
-        recordVoteForElectionWithoutDistrict(candidate);
+        recordVoteForElectionWithDistricts(candidate, electorDistrict);
     }
     else
     {
-        recordVoteForElectionWithDistricts(candidate, electorDistrict);
+        recordVoteForElectionWithoutDistrict(candidate);
     }
 }
 
