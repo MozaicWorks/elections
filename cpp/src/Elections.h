@@ -19,9 +19,10 @@ private:
 	bool withDistrict;
 
 	ElectionsWithoutDistricts electionsWithoutDistricts;
+	ElectionsWithDistricts electionsWithDistricts;
 
 public:
-	Elections(const map<string, vector<string>> &list, bool withDistrict) : list(list), withDistrict(withDistrict), votesWithDistricts{}, electionsWithoutDistricts(list){};
+	Elections(const map<string, vector<string>> &list, bool withDistrict) : list(list), withDistrict(withDistrict), votesWithDistricts{}, electionsWithoutDistricts(list), electionsWithDistricts(){};
 
 	void addCandidate(const string &candidate);
 

@@ -6,5 +6,5 @@ private:
     vector<string> candidates;
 
 public:
-    ElectionsWithDistricts();
+    ElectionsWithDistricts(){};
 };
