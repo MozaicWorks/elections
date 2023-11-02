@@ -6,10 +6,13 @@ void Elections::addCandidate(const string &candidate)
 {
     officialCandidates.push_back(candidate);
     candidates.push_back(candidate);
-    votesWithoutDistricts.push_back(0);
     votesWithDistricts["District 1"].push_back(0);
     votesWithDistricts["District 2"].push_back(0);
     votesWithDistricts["District 3"].push_back(0);
+
+    // ElectionsWithoutDistricts
+    electionsWithoutDistricts.addCandidate(candidate);
+    votesWithoutDistricts.push_back(0);
 }
 
 void Elections::recordVoteForElectionWithoutDistrict(const string &candidate)
@@ -76,6 +79,7 @@ void Elections::voteFor(const string &elector, const string &candidate, const st
     }
     else
     {
+        electionsWithoutDistricts.recordVoteForElectionWithoutDistrict(candidate);
         recordVoteForElectionWithoutDistrict(candidate);
     }
 }
@@ -145,7 +149,7 @@ int Elections::numberOfValidVotesForElectionsWithDistricts() const
     return nbValidVotes;
 }
 
-map<string, string> Elections::results() const
+map<string, string> Elections::resultsWithoutDistricts() const
 {
     map<string, string> results;
     int nbVotes = 0;
@@ -153,86 +157,97 @@ map<string, string> Elections::results() const
     int blankVotes = 0;
     int nbValidVotes = 0;
 
-    if (!withDistrict)
-    {
-        nbVotes = totalNumberOfVotesForElectionsWithoutDistricts();
-        nbValidVotes = numberOfValidVotesForElectionsWithoutDistricts();
+    nbVotes = totalNumberOfVotesForElectionsWithoutDistricts();
+    nbValidVotes = numberOfValidVotesForElectionsWithoutDistricts();
 
-        for (int i = 0; i < votesWithoutDistricts.size(); i++)
+    for (int i = 0; i < votesWithoutDistricts.size(); i++)
+    {
+        float candidatResult = ((float)votesWithoutDistricts[i] * 100) / nbValidVotes;
+        string candidate = candidates[i];
+        if (count(officialCandidates.begin(), officialCandidates.end(), candidate) > 0)
         {
-            float candidatResult = ((float)votesWithoutDistricts[i] * 100) / nbValidVotes;
+            results[candidate] = format(candidatResult);
+        }
+        else
+        {
+            if (candidates[i].size() == 0)
+            {
+                blankVotes += votesWithoutDistricts[i];
+            }
+            else
+            {
+                nullVotes += votesWithoutDistricts[i];
+            }
+        }
+    }
+    results["Blank"] = computeAndFormatVotesPercentageOfCategory(blankVotes, nbVotes);
+    results["Null"] = computeAndFormatVotesPercentageOfCategory(nullVotes, nbVotes);
+    results["Abstention"] = computeAndFormatAbstentionData(nbVotes);
+    return results;
+}
+
+map<string, string> Elections::resultsWithDistricts() const
+{
+    map<string, string> results;
+    int nbVotes = 0;
+    int nullVotes = 0;
+    int blankVotes = 0;
+    int nbValidVotes = 0;
+
+    nbVotes = totalNumberOfVotesForElectionsWithDistricts();
+    nbValidVotes = numberOfValidVotesForElectionsWithDistricts();
+
+    map<string, int> officialCandidatesResult;
+    for (int i = 0; i < officialCandidates.size(); i++)
+    {
+        officialCandidatesResult[candidates[i]] = 0;
+    }
+    for (auto entry : votesWithDistricts)
+    {
+        vector<float> districtResult;
+        vector<int> districtVotes = entry.second;
+        for (int i = 0; i < districtVotes.size(); i++)
+        {
+            float candidateResult = 0;
+            if (nbValidVotes != 0)
+                candidateResult = ((float)districtVotes[i] * 100) / nbValidVotes;
             string candidate = candidates[i];
             if (count(officialCandidates.begin(), officialCandidates.end(), candidate) > 0)
             {
-                results[candidate] = format(candidatResult);
+                districtResult.push_back(candidateResult);
             }
             else
             {
                 if (candidates[i].size() == 0)
                 {
-                    blankVotes += votesWithoutDistricts[i];
+                    blankVotes += districtVotes[i];
                 }
                 else
                 {
-                    nullVotes += votesWithoutDistricts[i];
+                    nullVotes += districtVotes[i];
                 }
             }
         }
+        int districtWinnerIndex = 0;
+        for (int i = 1; i < districtResult.size(); i++)
+        {
+            if (districtResult[districtWinnerIndex] < districtResult[i])
+                districtWinnerIndex = i;
+        }
+        officialCandidatesResult[candidates[districtWinnerIndex]] = officialCandidatesResult[candidates[districtWinnerIndex]] + 1;
     }
-    else
+    for (int i = 0; i < officialCandidatesResult.size(); i++)
     {
-        nbVotes = totalNumberOfVotesForElectionsWithDistricts();
-        nbValidVotes = numberOfValidVotesForElectionsWithDistricts();
-
-        map<string, int> officialCandidatesResult;
-        for (int i = 0; i < officialCandidates.size(); i++)
-        {
-            officialCandidatesResult[candidates[i]] = 0;
-        }
-        for (auto entry : votesWithDistricts)
-        {
-            vector<float> districtResult;
-            vector<int> districtVotes = entry.second;
-            for (int i = 0; i < districtVotes.size(); i++)
-            {
-                float candidateResult = 0;
-                if (nbValidVotes != 0)
-                    candidateResult = ((float)districtVotes[i] * 100) / nbValidVotes;
-                string candidate = candidates[i];
-                if (count(officialCandidates.begin(), officialCandidates.end(), candidate) > 0)
-                {
-                    districtResult.push_back(candidateResult);
-                }
-                else
-                {
-                    if (candidates[i].size() == 0)
-                    {
-                        blankVotes += districtVotes[i];
-                    }
-                    else
-                    {
-                        nullVotes += districtVotes[i];
-                    }
-                }
-            }
-            int districtWinnerIndex = 0;
-            for (int i = 1; i < districtResult.size(); i++)
-            {
-                if (districtResult[districtWinnerIndex] < districtResult[i])
-                    districtWinnerIndex = i;
-            }
-            officialCandidatesResult[candidates[districtWinnerIndex]] = officialCandidatesResult[candidates[districtWinnerIndex]] + 1;
-        }
-        for (int i = 0; i < officialCandidatesResult.size(); i++)
-        {
-            float ratioCandidate = ((float)officialCandidatesResult[candidates[i]]) / officialCandidatesResult.size() * 100;
-            results[candidates[i]] = format(ratioCandidate);
-        }
+        float ratioCandidate = ((float)officialCandidatesResult[candidates[i]]) / officialCandidatesResult.size() * 100;
+        results[candidates[i]] = format(ratioCandidate);
     }
-
     results["Blank"] = computeAndFormatVotesPercentageOfCategory(blankVotes, nbVotes);
     results["Null"] = computeAndFormatVotesPercentageOfCategory(nullVotes, nbVotes);
     results["Abstention"] = computeAndFormatAbstentionData(nbVotes);
-
     return results;
+}
+
+map<string, string> Elections::results() const
+{
+    return withDistrict ? resultsWithDistricts() : resultsWithoutDistricts();
 }

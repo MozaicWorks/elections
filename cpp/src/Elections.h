@@ -17,7 +17,7 @@ private:
 	map<string, vector<int>> votesWithDistricts;
 	map<string, vector<string>> list;
 	bool withDistrict;
-	const ElectionsWithoutDistricts &electionsWithoutDistricts;
+	ElectionsWithoutDistricts electionsWithoutDistricts;
 
 public:
 	Elections(const map<string, vector<string>> &list, bool withDistrict) : list(list), withDistrict(withDistrict), votesWithDistricts{}, electionsWithoutDistricts(list){};
@@ -45,6 +45,9 @@ private:
 
 	int totalNumberOfVotesForElectionsWithDistricts() const;
 	int numberOfValidVotesForElectionsWithDistricts() const;
+
+	map<string, string> resultsWithoutDistricts() const;
+	map<string, string> resultsWithDistricts() const;
 
 	string format(const auto &param) const
 	{
