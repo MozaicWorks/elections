@@ -4,6 +4,7 @@
 #include <sstream>
 #include <iomanip>
 #include "ElectionsWithoutDistricts.h"
+#include "ElectionsWithDistricts.h"
 
 using namespace std;
 
@@ -13,10 +14,10 @@ class Elections
 private:
 	vector<string> candidates;
 	vector<string> officialCandidates;
-	vector<int> votesWithoutDistricts;
 	map<string, vector<int>> votesWithDistricts;
 	map<string, vector<string>> list;
 	bool withDistrict;
+
 	ElectionsWithoutDistricts electionsWithoutDistricts;
 
 public:
