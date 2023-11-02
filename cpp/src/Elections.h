@@ -29,10 +29,6 @@ public:
 	map<string, string> results() const;
 
 private:
-	void recordVoteForElectionWithoutDistrict(const string &);
-	void recordVoteForExistingCandidateInNoDistrictElections(const string &);
-	void recordVoteForNewCandidateInNoDistrictElections(const string &);
-
 	void recordVoteForElectionWithDistricts(const string &, const string &);
 	void recordVoteForExistingCandidateInElectionWithDistrict(const string &, vector<int> &) const;
 	void recordVoteForNewCandidateInElectionWithDistrict(const string &, vector<int> &);
@@ -40,13 +36,9 @@ private:
 	string computeAndFormatVotesPercentageOfCategory(const int blankVotes, const int nbVotes) const;
 	string computeAndFormatAbstentionData(const int nbVotes) const;
 
-	int totalNumberOfVotesForElectionsWithoutDistricts() const;
-	int numberOfValidVotesForElectionsWithoutDistricts() const;
-
 	int totalNumberOfVotesForElectionsWithDistricts() const;
 	int numberOfValidVotesForElectionsWithDistricts() const;
 
-	map<string, string> resultsWithoutDistricts() const;
 	map<string, string> resultsWithDistricts() const;
 
 	string format(const auto &param) const

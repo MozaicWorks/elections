@@ -9,35 +9,7 @@ void Elections::addCandidate(const string &candidate)
     votesWithDistricts["District 1"].push_back(0);
     votesWithDistricts["District 2"].push_back(0);
     votesWithDistricts["District 3"].push_back(0);
-
-    // ElectionsWithoutDistricts
     electionsWithoutDistricts.addCandidate(candidate);
-    votesWithoutDistricts.push_back(0);
-}
-
-void Elections::recordVoteForElectionWithoutDistrict(const string &candidate)
-{
-    const bool candidateFoundInCandidates = (count(candidates.begin(), candidates.end(), candidate) > 0);
-    if (candidateFoundInCandidates)
-    {
-        recordVoteForExistingCandidateInNoDistrictElections(candidate);
-    }
-    else
-    {
-        recordVoteForNewCandidateInNoDistrictElections(candidate);
-    }
-}
-
-void Elections::recordVoteForExistingCandidateInNoDistrictElections(const string &candidate)
-{
-    int index = find(candidates.begin(), candidates.end(), candidate) - candidates.begin();
-    votesWithoutDistricts[index] = votesWithoutDistricts[index] + 1;
-}
-
-void Elections::recordVoteForNewCandidateInNoDistrictElections(const string &candidate)
-{
-    candidates.push_back(candidate);
-    votesWithoutDistricts.push_back(1);
 }
 
 void Elections::recordVoteForExistingCandidateInElectionWithDistrict(const string &candidate, vector<int> &districtVotes) const
@@ -80,7 +52,6 @@ void Elections::voteFor(const string &elector, const string &candidate, const st
     else
     {
         electionsWithoutDistricts.recordVoteForElectionWithoutDistrict(candidate);
-        recordVoteForElectionWithoutDistrict(candidate);
     }
 }
 
@@ -102,23 +73,6 @@ string Elections::computeAndFormatAbstentionData(const int nbVotes) const
     int nbElectors = accumulate(sizes.begin(), sizes.end(), 0);
     float abstentionResult = 100 - ((float)nbVotes * 100 / nbElectors);
     return format(abstentionResult);
-}
-
-int Elections::totalNumberOfVotesForElectionsWithoutDistricts() const
-{
-    return accumulate(votesWithoutDistricts.begin(), votesWithoutDistricts.end(), 0);
-}
-
-int Elections::numberOfValidVotesForElectionsWithoutDistricts() const
-{
-    int nbValidVotes = 0;
-    for (int i = 0; i < officialCandidates.size(); i++)
-    {
-        int index = find(candidates.begin(), candidates.end(), officialCandidates[i]) - candidates.begin();
-        nbValidVotes += votesWithoutDistricts[index];
-    }
-
-    return nbValidVotes;
 }
 
 int Elections::totalNumberOfVotesForElectionsWithDistricts() const
@@ -147,43 +101,6 @@ int Elections::numberOfValidVotesForElectionsWithDistricts() const
         }
     }
     return nbValidVotes;
-}
-
-map<string, string> Elections::resultsWithoutDistricts() const
-{
-    map<string, string> results;
-    int nbVotes = 0;
-    int nullVotes = 0;
-    int blankVotes = 0;
-    int nbValidVotes = 0;
-
-    nbVotes = totalNumberOfVotesForElectionsWithoutDistricts();
-    nbValidVotes = numberOfValidVotesForElectionsWithoutDistricts();
-
-    for (int i = 0; i < votesWithoutDistricts.size(); i++)
-    {
-        float candidatResult = ((float)votesWithoutDistricts[i] * 100) / nbValidVotes;
-        string candidate = candidates[i];
-        if (count(officialCandidates.begin(), officialCandidates.end(), candidate) > 0)
-        {
-            results[candidate] = format(candidatResult);
-        }
-        else
-        {
-            if (candidates[i].size() == 0)
-            {
-                blankVotes += votesWithoutDistricts[i];
-            }
-            else
-            {
-                nullVotes += votesWithoutDistricts[i];
-            }
-        }
-    }
-    results["Blank"] = computeAndFormatVotesPercentageOfCategory(blankVotes, nbVotes);
-    results["Null"] = computeAndFormatVotesPercentageOfCategory(nullVotes, nbVotes);
-    results["Abstention"] = computeAndFormatAbstentionData(nbVotes);
-    return results;
 }
 
 map<string, string> Elections::resultsWithDistricts() const
@@ -249,5 +166,5 @@ map<string, string> Elections::resultsWithDistricts() const
 
 map<string, string> Elections::results() const
 {
-    return withDistrict ? resultsWithDistricts() : resultsWithoutDistricts();
+    return withDistrict ? resultsWithDistricts() : electionsWithoutDistricts.resultsWithoutDistricts();
 }
