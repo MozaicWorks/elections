@@ -3,6 +3,7 @@
 #include <map>
 #include <sstream>
 #include <iomanip>
+#include "ElectionsWithoutDistricts.h"
 
 using namespace std;
 
@@ -16,9 +17,10 @@ private:
 	map<string, vector<int>> votesWithDistricts;
 	map<string, vector<string>> list;
 	bool withDistrict;
+	const ElectionsWithoutDistricts &electionsWithoutDistricts;
 
 public:
-	Elections(const map<string, vector<string>> &list, bool withDistrict) : list(list), withDistrict(withDistrict), votesWithDistricts(){};
+	Elections(const map<string, vector<string>> &list, bool withDistrict) : list(list), withDistrict(withDistrict), votesWithDistricts{}, electionsWithoutDistricts(list){};
 
 	void addCandidate(const string &candidate);
 
