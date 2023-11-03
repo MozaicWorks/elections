@@ -169,5 +169,5 @@ map<string, string> Elections::resultsWithDistricts() const
 
 map<string, string> Elections::results() const
 {
-    return withDistrict ? resultsWithDistricts() : electionsWithoutDistricts.resultsWithoutDistricts();
+    return withDistrict ? electionsWithDistricts.resultsWithDistricts() : electionsWithoutDistricts.resultsWithoutDistricts();
 }
