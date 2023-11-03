@@ -50,6 +50,7 @@ void Elections::voteFor(const string &elector, const string &candidate, const st
     if (withDistrict)
     {
         recordVoteForElectionWithDistricts(candidate, electorDistrict);
+        electionsWithDistricts.recordVoteForElectionWithDistricts(candidate, electorDistrict);
     }
     else
     {

@@ -15,4 +15,9 @@ public:
     ElectionsWithDistricts() : candidates{}, officialCandidates{}, votesWithDistricts{} {};
 
     void addCandidate(const string &);
+    void recordVoteForElectionWithDistricts(const string &, const string &);
+
+private:
+    void recordVoteForExistingCandidateInElectionWithDistrict(const string &, vector<int> &) const;
+    void recordVoteForNewCandidateInElectionWithDistrict(const string &, vector<int> &);
 };
