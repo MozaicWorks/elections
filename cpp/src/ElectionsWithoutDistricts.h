@@ -21,14 +21,14 @@ public:
 
     void addCandidate(const string &);
 
-    void recordVoteForElectionWithoutDistrict(const string &);
-    void recordVoteForExistingCandidateInNoDistrictElections(const string &);
-    void recordVoteForNewCandidateInNoDistrictElections(const string &);
+    void recordVote(const string &);
+    void recordVoteForExistingCandidate(const string &);
+    void recordVoteForNewCandidate(const string &);
 
-    int totalNumberOfVotesForElectionsWithoutDistricts() const;
-    int numberOfValidVotesForElectionsWithoutDistricts() const;
+    int totalNumberOfVotes() const;
+    int numberOfValidVotes() const;
 
-    map<string, string> resultsWithoutDistricts() const;
+    map<string, string> results() const;
 
     string computeAndFormatVotesPercentageOfCategory(const int votesOfACategory, const int totalNumberOfVotes) const
     {

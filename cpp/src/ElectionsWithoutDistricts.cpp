@@ -7,32 +7,32 @@ void ElectionsWithoutDistricts::addCandidate(const string &candidate)
     votesWithoutDistricts.push_back(0);
 }
 
-void ElectionsWithoutDistricts::recordVoteForElectionWithoutDistrict(const string &candidate)
+void ElectionsWithoutDistricts::recordVote(const string &candidate)
 {
     const bool candidateFoundInCandidates = (count(candidates.begin(), candidates.end(), candidate) > 0);
     if (candidateFoundInCandidates)
     {
-        recordVoteForExistingCandidateInNoDistrictElections(candidate);
+        recordVoteForExistingCandidate(candidate);
     }
     else
     {
-        recordVoteForNewCandidateInNoDistrictElections(candidate);
+        recordVoteForNewCandidate(candidate);
     }
 }
 
-void ElectionsWithoutDistricts::recordVoteForExistingCandidateInNoDistrictElections(const string &candidate)
+void ElectionsWithoutDistricts::recordVoteForExistingCandidate(const string &candidate)
 {
     int index = find(candidates.begin(), candidates.end(), candidate) - candidates.begin();
     votesWithoutDistricts[index] = votesWithoutDistricts[index] + 1;
 }
 
-void ElectionsWithoutDistricts::recordVoteForNewCandidateInNoDistrictElections(const string &candidate)
+void ElectionsWithoutDistricts::recordVoteForNewCandidate(const string &candidate)
 {
     candidates.push_back(candidate);
     votesWithoutDistricts.push_back(1);
 }
 
-map<string, string> ElectionsWithoutDistricts::resultsWithoutDistricts() const
+map<string, string> ElectionsWithoutDistricts::results() const
 {
     map<string, string> results;
     int nbVotes = 0;
@@ -40,8 +40,8 @@ map<string, string> ElectionsWithoutDistricts::resultsWithoutDistricts() const
     int blankVotes = 0;
     int nbValidVotes = 0;
 
-    nbVotes = totalNumberOfVotesForElectionsWithoutDistricts();
-    nbValidVotes = numberOfValidVotesForElectionsWithoutDistricts();
+    nbVotes = totalNumberOfVotes();
+    nbValidVotes = numberOfValidVotes();
 
     for (int i = 0; i < votesWithoutDistricts.size(); i++)
     {
@@ -69,12 +69,12 @@ map<string, string> ElectionsWithoutDistricts::resultsWithoutDistricts() const
     return results;
 }
 
-int ElectionsWithoutDistricts::totalNumberOfVotesForElectionsWithoutDistricts() const
+int ElectionsWithoutDistricts::totalNumberOfVotes() const
 {
     return accumulate(votesWithoutDistricts.begin(), votesWithoutDistricts.end(), 0);
 }
 
-int ElectionsWithoutDistricts::numberOfValidVotesForElectionsWithoutDistricts() const
+int ElectionsWithoutDistricts::numberOfValidVotes() const
 {
     int nbValidVotes = 0;
     for (int i = 0; i < officialCandidates.size(); i++)
@@ -85,5 +85,3 @@ int ElectionsWithoutDistricts::numberOfValidVotesForElectionsWithoutDistricts() 
 
     return nbValidVotes;
 }
-
-
