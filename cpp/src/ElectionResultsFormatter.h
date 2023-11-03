@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include <sstream>
 #include <vector>
@@ -5,6 +6,7 @@
 #include <iomanip>
 
 using namespace std;
+
 
 class ElectionResultsFormatter
 {

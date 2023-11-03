@@ -49,7 +49,7 @@ map<string, string> ElectionsWithoutDistricts::results() const
         string candidate = candidates[i];
         if (count(officialCandidates.begin(), officialCandidates.end(), candidate) > 0)
         {
-            results[candidate] = format(candidatResult);
+            results[candidate] = electionResultsFormatter.format(candidatResult);
         }
         else
         {
@@ -63,9 +63,9 @@ map<string, string> ElectionsWithoutDistricts::results() const
             }
         }
     }
-    results["Blank"] = computeAndFormatVotesPercentageOfCategory(blankVotes, nbVotes);
-    results["Null"] = computeAndFormatVotesPercentageOfCategory(nullVotes, nbVotes);
-    results["Abstention"] = computeAndFormatAbstentionData(nbVotes);
+    results["Blank"] = electionResultsFormatter.computeAndFormatVotesPercentageOfCategory(blankVotes, nbVotes);
+    results["Null"] = electionResultsFormatter.computeAndFormatVotesPercentageOfCategory(nullVotes, nbVotes);
+    results["Abstention"] = electionResultsFormatter.computeAndFormatAbstentionData(list, nbVotes);
     return results;
 }
 
