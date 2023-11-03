@@ -124,30 +124,10 @@ map<string, string> ElectionsWithDistricts::results() const
     for (int i = 0; i < officialCandidatesResult.size(); i++)
     {
         float ratioCandidate = ((float)officialCandidatesResult[candidates[i]]) / officialCandidatesResult.size() * 100;
-        results[candidates[i]] = format(ratioCandidate);
+        results[candidates[i]] = electionResultsFormatter.format(ratioCandidate);
     }
-    results["Blank"] = computeAndFormatVotesPercentageOfCategory(blankVotes, nbVotes);
-    results["Null"] = computeAndFormatVotesPercentageOfCategory(nullVotes, nbVotes);
-    results["Abstention"] = computeAndFormatAbstentionData(nbVotes);
+    results["Blank"] = electionResultsFormatter.computeAndFormatVotesPercentageOfCategory(blankVotes, nbVotes);
+    results["Null"] = electionResultsFormatter.computeAndFormatVotesPercentageOfCategory(nullVotes, nbVotes);
+    results["Abstention"] = electionResultsFormatter.computeAndFormatAbstentionData(list, nbVotes);
     return results;
-}
-
-string ElectionsWithDistricts::computeAndFormatVotesPercentageOfCategory(const int votesOfACategory, const int totalNumberOfVotes) const
-{
-    float percentageResult = ((float)votesOfACategory * 100) / totalNumberOfVotes;
-    return format(percentageResult);
-}
-
-string ElectionsWithDistricts::computeAndFormatAbstentionData(const int nbVotes) const
-{
-    vector<vector<string>> values;
-    transform(list.begin(), list.end(), back_inserter(values), [](const auto &val)
-              { return val.second; });
-
-    vector<int> sizes;
-    transform(values.begin(), values.end(), back_inserter(sizes), [](const auto &v)
-              { return v.size(); });
-    int nbElectors = accumulate(sizes.begin(), sizes.end(), 0);
-    float abstentionResult = 100 - ((float)nbVotes * 100 / nbElectors);
-    return format(abstentionResult);
 }
