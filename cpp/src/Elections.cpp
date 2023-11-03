@@ -12,7 +12,7 @@ void Elections::voteFor(const string &elector, const string &candidate, const st
 {
     if (withDistrict)
     {
-        electionsWithDistricts.recordVoteForElectionWithDistricts(candidate, electorDistrict);
+        electionsWithDistricts.recordVote(candidate, electorDistrict);
     }
     else
     {
@@ -22,5 +22,5 @@ void Elections::voteFor(const string &elector, const string &candidate, const st
 
 map<string, string> Elections::results() const
 {
-    return withDistrict ? electionsWithDistricts.resultsWithDistricts() : electionsWithoutDistricts.resultsWithoutDistricts();
+    return withDistrict ? electionsWithDistricts.results() : electionsWithoutDistricts.resultsWithoutDistricts();
 }

@@ -12,25 +12,24 @@ private:
     vector<string> candidates;
     vector<string> officialCandidates;
     map<string, vector<int>> votesWithDistricts;
-	map<string, vector<string>> list;
+    map<string, vector<string>> list;
 
 public:
     ElectionsWithDistricts(map<string, vector<string>> list) : candidates{}, officialCandidates{}, votesWithDistricts{}, list{list} {};
 
     void addCandidate(const string &);
-    void recordVoteForElectionWithDistricts(const string &, const string &);
-    map<string, string> resultsWithDistricts() const;
+    void recordVote(const string &, const string &);
+    map<string, string> results() const;
 
 private:
-    void recordVoteForExistingCandidateInElectionWithDistrict(const string &, vector<int> &) const;
-    void recordVoteForNewCandidateInElectionWithDistrict(const string &, vector<int> &);
+    void recordVoteForExistingCandidate(const string &, vector<int> &) const;
+    void recordVoteForNewCandidate(const string &, vector<int> &);
 
-    int totalNumberOfVotesForElectionsWithDistricts() const;
-    int numberOfValidVotesForElectionsWithDistricts() const;
+    int totalNumberOfVotes() const;
+    int numberOfValidVotes() const;
 
-	string computeAndFormatVotesPercentageOfCategory(const int blankVotes, const int nbVotes) const;
-	string computeAndFormatAbstentionData(const int nbVotes) const;
-
+    string computeAndFormatVotesPercentageOfCategory(const int blankVotes, const int nbVotes) const;
+    string computeAndFormatAbstentionData(const int nbVotes) const;
 
     string format(const auto &param) const
     {

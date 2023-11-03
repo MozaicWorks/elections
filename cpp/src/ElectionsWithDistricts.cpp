@@ -12,13 +12,13 @@ void ElectionsWithDistricts::addCandidate(const string &candidate)
     votesWithDistricts["District 3"].push_back(0);
 }
 
-void ElectionsWithDistricts::recordVoteForExistingCandidateInElectionWithDistrict(const string &candidate, vector<int> &districtVotes) const
+void ElectionsWithDistricts::recordVoteForExistingCandidate(const string &candidate, vector<int> &districtVotes) const
 {
     int index = find(candidates.begin(), candidates.end(), candidate) - candidates.begin();
     districtVotes[index] = districtVotes[index] + 1;
 }
 
-void ElectionsWithDistricts::recordVoteForNewCandidateInElectionWithDistrict(const string &candidate, vector<int> &districtVotes)
+void ElectionsWithDistricts::recordVoteForNewCandidate(const string &candidate, vector<int> &districtVotes)
 {
     candidates.push_back(candidate);
     for (auto &[district, votes] : votesWithDistricts)
@@ -28,22 +28,22 @@ void ElectionsWithDistricts::recordVoteForNewCandidateInElectionWithDistrict(con
     districtVotes[candidates.size() - 1] = districtVotes[candidates.size() - 1] + 1;
 }
 
-void ElectionsWithDistricts::recordVoteForElectionWithDistricts(const string &candidate, const string &electorDistrict)
+void ElectionsWithDistricts::recordVote(const string &candidate, const string &electorDistrict)
 {
     vector<int> &districtVotes = votesWithDistricts[electorDistrict];
     const bool candidateFoundInCandidates = (count(candidates.begin(), candidates.end(), candidate) > 0);
 
     if (candidateFoundInCandidates)
     {
-        recordVoteForExistingCandidateInElectionWithDistrict(candidate, districtVotes);
+        recordVoteForExistingCandidate(candidate, districtVotes);
     }
     else
     {
-        recordVoteForNewCandidateInElectionWithDistrict(candidate, districtVotes);
+        recordVoteForNewCandidate(candidate, districtVotes);
     }
 }
 
-int ElectionsWithDistricts::totalNumberOfVotesForElectionsWithDistricts() const
+int ElectionsWithDistricts::totalNumberOfVotes() const
 {
     int nbVotes = 0;
     for (auto entry : votesWithDistricts)
@@ -56,7 +56,7 @@ int ElectionsWithDistricts::totalNumberOfVotesForElectionsWithDistricts() const
     return nbVotes;
 }
 
-int ElectionsWithDistricts::numberOfValidVotesForElectionsWithDistricts() const
+int ElectionsWithDistricts::numberOfValidVotes() const
 {
     int nbValidVotes = 0;
     for (int i = 0; i < officialCandidates.size(); i++)
@@ -71,7 +71,7 @@ int ElectionsWithDistricts::numberOfValidVotesForElectionsWithDistricts() const
     return nbValidVotes;
 }
 
-map<string, string> ElectionsWithDistricts::resultsWithDistricts() const
+map<string, string> ElectionsWithDistricts::results() const
 {
     map<string, string> results;
     int nbVotes = 0;
@@ -79,8 +79,8 @@ map<string, string> ElectionsWithDistricts::resultsWithDistricts() const
     int blankVotes = 0;
     int nbValidVotes = 0;
 
-    nbVotes = totalNumberOfVotesForElectionsWithDistricts();
-    nbValidVotes = numberOfValidVotesForElectionsWithDistricts();
+    nbVotes = totalNumberOfVotes();
+    nbValidVotes = numberOfValidVotes();
 
     map<string, int> officialCandidatesResult;
     for (int i = 0; i < officialCandidates.size(); i++)
