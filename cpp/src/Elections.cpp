@@ -9,7 +9,9 @@ void Elections::addCandidate(const string &candidate)
     votesWithDistricts["District 1"].push_back(0);
     votesWithDistricts["District 2"].push_back(0);
     votesWithDistricts["District 3"].push_back(0);
+
     electionsWithoutDistricts.addCandidate(candidate);
+    electionsWithDistricts.addCandidate(candidate);
 }
 
 void Elections::recordVoteForExistingCandidateInElectionWithDistrict(const string &candidate, vector<int> &districtVotes) const
