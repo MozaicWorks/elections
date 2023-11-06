@@ -7,8 +7,7 @@
 
 string ElectionResultsFormatter::formatResult(const int votesOfACategory, const int totalNumberOfVotes) const
 {
-    Percent percent(votesOfACategory, totalNumberOfVotes);
-    return percent.format();
+    return Percent(votesOfACategory, totalNumberOfVotes).format();
 }
 
 string ElectionResultsFormatter::formatAbstentions(const map<string, vector<string>> &list, const int nbVotes) const
