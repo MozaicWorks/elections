@@ -2,12 +2,13 @@
 #include <numeric>
 #include <algorithm>
 
+#include "Percent.h"
 #include "ElectionResultsFormatter.h"
 
 string ElectionResultsFormatter::computeAndFormatVotesPercentageOfCategory(const int votesOfACategory, const int totalNumberOfVotes) const
 {
-    float percentageResult = ((float)votesOfACategory * 100) / totalNumberOfVotes;
-    return format(percentageResult);
+    Percent percent(votesOfACategory, totalNumberOfVotes);
+    return percent.format();
 }
 
 string ElectionResultsFormatter::computeAndFormatAbstentionData(const map<string, vector<string>> &list, const int nbVotes) const
