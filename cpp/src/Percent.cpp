@@ -5,7 +5,12 @@
 
 float Percent::value() const
 {
-    return ((float) partial * 100) / total;
+    return ((float)partial * 100) / total;
+}
+
+Percent Percent::rest() const
+{
+    return Percent(total - partial, total);
 }
 
 string Percent::format() const

@@ -21,6 +21,5 @@ string ElectionResultsFormatter::computeAndFormatAbstentionData(const map<string
     transform(values.begin(), values.end(), back_inserter(sizes), [](const auto &v)
               { return v.size(); });
     int nbElectors = accumulate(sizes.begin(), sizes.end(), 0);
-    float abstentionResult = 100 - ((float)nbVotes * 100 / nbElectors);
-    return format(abstentionResult);
+    return Percent(nbVotes, nbElectors).rest().format();
 }
