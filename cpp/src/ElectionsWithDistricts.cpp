@@ -1,7 +1,6 @@
 #include <numeric>
 #include <algorithm>
 
-#include "Percent.h"
 #include "ElectionsWithDistricts.h"
 
 void ElectionsWithDistricts::addCandidate(const string &candidate)
