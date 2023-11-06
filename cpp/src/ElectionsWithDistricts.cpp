@@ -1,6 +1,7 @@
 #include <numeric>
 #include <algorithm>
 
+#include "Percent.h"
 #include "ElectionsWithDistricts.h"
 
 void ElectionsWithDistricts::addCandidate(const string &candidate)
@@ -123,8 +124,7 @@ map<string, string> ElectionsWithDistricts::results() const
     }
     for (int i = 0; i < officialCandidatesResult.size(); i++)
     {
-        float ratioCandidate = ((float)officialCandidatesResult[candidates[i]]) / officialCandidatesResult.size() * 100;
-        results[candidates[i]] = electionResultsFormatter.format(ratioCandidate);
+        results[candidates[i]] = Percent(officialCandidatesResult[candidates[i]], officialCandidatesResult.size()).format();
     }
     results["Blank"] = electionResultsFormatter.computeAndFormatVotesPercentageOfCategory(blankVotes, nbVotes);
     results["Null"] = electionResultsFormatter.computeAndFormatVotesPercentageOfCategory(nullVotes, nbVotes);
