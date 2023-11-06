@@ -15,13 +15,13 @@ class ElectionsWithoutDistricts
 private:
     vector<string> candidates;
     vector<string> officialCandidates;
-    vector<int> votesWithoutDistricts;
+    vector<int> votes;
     map<string, vector<string>> list;
 
     const ElectionResultsFormatter electionResultsFormatter;
 
 public:
-    ElectionsWithoutDistricts(const map<string, vector<string>> &list) : list(list), votesWithoutDistricts{}, officialCandidates{}, electionResultsFormatter{} {};
+    ElectionsWithoutDistricts(const map<string, vector<string>> &list) : list(list), votes{}, officialCandidates{}, electionResultsFormatter{} {};
 
     void addCandidate(const string &);
     void recordVote(const string &);
