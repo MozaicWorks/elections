@@ -1,3 +1,4 @@
+#include "Percent.h"
 #include "ElectionsWithoutDistricts.h"
 
 void ElectionsWithoutDistricts::addCandidate(const string &candidate)
@@ -46,10 +47,11 @@ map<string, string> ElectionsWithoutDistricts::results() const
     for (int i = 0; i < votes.size(); i++)
     {
         float candidatResult = ((float)votes[i] * 100) / nbValidVotes;
+        Percent candidateResultPercent(votes[i], nbValidVotes);
         string candidate = candidates[i];
         if (count(officialCandidates.begin(), officialCandidates.end(), candidate) > 0)
         {
-            results[candidate] = electionResultsFormatter.format(candidatResult);
+            results[candidate] = candidateResultPercent.format();
         }
         else
         {
