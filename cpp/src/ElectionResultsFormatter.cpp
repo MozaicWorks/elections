@@ -5,13 +5,13 @@
 #include "Percent.h"
 #include "ElectionResultsFormatter.h"
 
-string ElectionResultsFormatter::computeAndFormatVotesPercentageOfCategory(const int votesOfACategory, const int totalNumberOfVotes) const
+string ElectionResultsFormatter::formatResult(const int votesOfACategory, const int totalNumberOfVotes) const
 {
     Percent percent(votesOfACategory, totalNumberOfVotes);
     return percent.format();
 }
 
-string ElectionResultsFormatter::computeAndFormatAbstentionData(const map<string, vector<string>> &list, const int nbVotes) const
+string ElectionResultsFormatter::formatAbstentions(const map<string, vector<string>> &list, const int nbVotes) const
 {
     vector<vector<string>> values;
     transform(list.begin(), list.end(), back_inserter(values), [](const auto &val)

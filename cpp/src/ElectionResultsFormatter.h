@@ -10,6 +10,6 @@ using namespace std;
 class ElectionResultsFormatter
 {
 public:
-    string computeAndFormatVotesPercentageOfCategory(const int blankVotes, const int nbVotes) const;
-    string computeAndFormatAbstentionData(const map<string, vector<string>> &list, const int nbVotes) const;
+    string formatResult(const int blankVotes, const int nbVotes) const;
+    string formatAbstentions(const map<string, vector<string>> &list, const int nbVotes) const;
 };
