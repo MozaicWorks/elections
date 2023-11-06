@@ -64,7 +64,7 @@ map<string, string> ElectionsWithoutDistricts::results() const
     }
     results["Blank"] = electionResultsFormatter.formatResult(blankVotes, nbVotes);
     results["Null"] = electionResultsFormatter.formatResult(nullVotes, nbVotes);
-    results["Abstention"] = electionResultsFormatter.formatAbstentions(list, nbVotes);
+    results["Abstention"] = electionResultsFormatter.formatAbstentions(electorsByDistrict, nbVotes);
     return results;
 }
 
