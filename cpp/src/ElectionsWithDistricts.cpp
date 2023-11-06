@@ -124,7 +124,7 @@ map<string, string> ElectionsWithDistricts::results() const
     }
     for (int i = 0; i < officialCandidatesResult.size(); i++)
     {
-        results[candidates[i]] = Percent(officialCandidatesResult[candidates[i]], officialCandidatesResult.size()).format();
+        results[candidates[i]] = electionResultsFormatter.formatResult(officialCandidatesResult[candidates[i]], officialCandidatesResult.size());
     }
     results["Blank"] = electionResultsFormatter.formatResult(blankVotes, nbVotes);
     results["Null"] = electionResultsFormatter.formatResult(nullVotes, nbVotes);
