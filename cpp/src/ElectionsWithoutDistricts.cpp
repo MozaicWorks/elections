@@ -1,4 +1,3 @@
-#include "Percent.h"
 #include "ElectionsWithoutDistricts.h"
 
 void ElectionsWithoutDistricts::addCandidate(const string &candidate)
