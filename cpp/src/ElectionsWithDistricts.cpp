@@ -1,6 +1,7 @@
 #include <numeric>
 #include <algorithm>
 
+#include "Electors.h"
 #include "ElectionsWithDistricts.h"
 
 void ElectionsWithDistricts::addCandidate(const string &candidate)
@@ -127,6 +128,7 @@ map<string, string> ElectionsWithDistricts::results() const
     }
     results["Blank"] = electionResultsFormatter.formatResult(blankVotes, nbVotes);
     results["Null"] = electionResultsFormatter.formatResult(nullVotes, nbVotes);
-    results["Abstention"] = electionResultsFormatter.formatAbstentions(electorsByDistrict, nbVotes);
+
+    results["Abstention"] = electionResultsFormatter.formatAbstentions(nbVotes, Electors(electorsByDistrict).count());
     return results;
 }

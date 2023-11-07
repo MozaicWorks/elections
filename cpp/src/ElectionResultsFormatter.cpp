@@ -15,6 +15,11 @@ string ElectionResultsFormatter::formatAbstentions(const map<string, vector<stri
     return Percent(nbVotes, countElectors(electorsByDistrict)).rest().format();
 }
 
+string ElectionResultsFormatter::formatAbstentions(const int nbVotes, const int electorsCount) const
+{
+    return Percent(nbVotes, electorsCount).rest().format();
+}
+
 int ElectionResultsFormatter::countElectors(const map<string, vector<string>> &electorsByDistrict) const
 {
     vector<vector<string>> electors;

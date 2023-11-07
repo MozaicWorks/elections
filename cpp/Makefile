@@ -2,7 +2,7 @@ runTests: compile
 	out/elections
 
 compile: out
-	g++ -std=c++20 -Isrc/ -Itests/ src/Elections.cpp src/ElectionsWithoutDistricts.cpp src/ElectionsWithDistricts.cpp src/ElectionResultsFormatter.cpp src/Percent.cpp tests/ElectionsTest.cpp -oout/elections
+	g++ -std=c++20 -Isrc/ -Itests/ src/Elections.cpp src/ElectionsWithoutDistricts.cpp src/ElectionsWithDistricts.cpp src/ElectionResultsFormatter.cpp src/Percent.cpp src/Electors.cpp tests/ElectionsTest.cpp -oout/elections
 
 out:
 	mkdir -p out/
