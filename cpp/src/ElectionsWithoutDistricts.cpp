@@ -47,21 +47,17 @@ map<string, string> ElectionsWithoutDistricts::results() const
     for (int i = 0; i < votes.size(); i++)
     {
         string candidate = candidates[i];
-        if (count(officialCandidates.begin(), officialCandidates.end(), candidate) > 0)
-        {
+        const bool isValidCandidate = (count(officialCandidates.begin(), officialCandidates.end(), candidate) > 0);
+        const bool voteIsBlank = (candidates[i].size() == 0);
+
+        if (isValidCandidate)
             results[candidate] = electionResultsFormatter.formatResult(votes[i], nbValidVotes);
-        }
-        else
-        {
-            if (candidates[i].size() == 0)
-            {
-                blankVotes += votes[i];
-            }
-            else
-            {
-                nullVotes += votes[i];
-            }
-        }
+
+        if (!isValidCandidate && voteIsBlank)
+            blankVotes += votes[i];
+
+        if (!isValidCandidate && !voteIsBlank)
+            nullVotes += votes[i];
     }
     results["Blank"] = electionResultsFormatter.formatResult(blankVotes, nbVotes);
     results["Null"] = electionResultsFormatter.formatResult(nullVotes, nbVotes);
