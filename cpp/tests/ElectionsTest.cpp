@@ -52,7 +52,9 @@ TEST_CASE("ElectionWithDistricts")
         {"District 2", vector<string>{"Jerry", "Simon"}},
         {"District 3", vector<string>{"Johnny", "Matt", "Carole"}}};
 
-    Elections elections(electorsByDistrict, true);
+    Electors electors(electorsByDistrict);
+
+    Elections elections(electors, true);
     elections.addCandidate("Michel");
     elections.addCandidate("Jerry");
     elections.addCandidate("Johnny");
