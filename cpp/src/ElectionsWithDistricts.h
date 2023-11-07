@@ -17,9 +17,12 @@ private:
     map<string, vector<string>> electorsByDistrict;
 
     const ElectionResultsFormatter electionResultsFormatter;
+    Electors electors;
 
 public:
     ElectionsWithDistricts(map<string, vector<string>> electorsByDistrict) : candidates{}, officialCandidates{}, votes{}, electorsByDistrict{electorsByDistrict}, electionResultsFormatter{} {};
+
+    ElectionsWithDistricts(Electors electors) : candidates{}, officialCandidates{}, votes{}, electorsByDistrict{electorsByDistrict}, electionResultsFormatter{}, electors(electors){};
 
     void addCandidate(const string &);
     void recordVote(const string &, const string &);

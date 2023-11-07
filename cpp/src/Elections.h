@@ -4,6 +4,7 @@
 #include <sstream>
 #include <iomanip>
 
+#include "Electors.h"
 #include "ElectionsWithoutDistricts.h"
 #include "ElectionsWithDistricts.h"
 
@@ -17,9 +18,12 @@ private:
 
 	ElectionsWithoutDistricts electionsWithoutDistricts;
 	ElectionsWithDistricts electionsWithDistricts;
+	Electors electors;
 
 public:
-	Elections(const map<string, vector<string>> &electorsByDistrict, bool withDistrict) : withDistrict(withDistrict), electionsWithoutDistricts(electorsByDistrict), electionsWithDistricts(electorsByDistrict){};
+	Elections(const map<string, vector<string>> &electorsByDistrict, bool withDistrict) : withDistrict(withDistrict), electionsWithoutDistricts(electorsByDistrict), electionsWithDistricts(electorsByDistrict), electors(){};
+
+	Elections(Electors electors, bool withDistrict) : withDistrict(withDistrict), electionsWithoutDistricts(electors), electionsWithDistricts(electors), electors{electors} {};
 
 	void addCandidate(const string &candidate);
 
