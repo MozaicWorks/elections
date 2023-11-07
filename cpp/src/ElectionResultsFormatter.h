@@ -12,4 +12,7 @@ class ElectionResultsFormatter
 public:
     string formatResult(const int blankVotes, const int nbVotes) const;
     string formatAbstentions(const map<string, vector<string>> &electorsByDistrict, const int nbVotes) const;
+
+private:
+    int countElectors(const map<string, vector<string>> &electorsByDistrict) const;
 };
