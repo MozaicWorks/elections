@@ -35,14 +35,12 @@ void ElectionsWithoutDistricts::recordVoteForNewCandidate(const string &candidat
 
 map<string, string> ElectionsWithoutDistricts::results() const
 {
+    const int nbVotes = totalNumberOfVotes();
+    const int nbValidVotes = numberOfValidVotes();
+
     map<string, string> results;
-    int nbVotes = 0;
     int nullVotes = 0;
     int blankVotes = 0;
-    int nbValidVotes = 0;
-
-    nbVotes = totalNumberOfVotes();
-    nbValidVotes = numberOfValidVotes();
 
     for (int i = 0; i < votes.size(); i++)
     {
