@@ -6,6 +6,7 @@
 #include <sstream>
 #include <iomanip>
 
+#include "Candidates.h"
 #include "ElectionResultsFormatter.h"
 
 using namespace std;
@@ -13,14 +14,13 @@ using namespace std;
 class ElectionsWithoutDistricts
 {
 private:
-    vector<string> candidates;
-    vector<string> officialCandidates;
     vector<int> votes;
     const ElectionResultsFormatter electionResultsFormatter;
     Electors electors;
+    Candidates theCandidates;
 
 public:
-    ElectionsWithoutDistricts(Electors electors) : votes{}, officialCandidates{}, electors(electors), electionResultsFormatter{} {};
+    ElectionsWithoutDistricts(Electors electors) : votes{}, electors(electors), electionResultsFormatter{}, theCandidates{} {};
 
     void addCandidate(const string &);
     void recordVote(const string &);

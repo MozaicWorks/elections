@@ -3,15 +3,13 @@
 
 void ElectionsWithoutDistricts::addCandidate(const string &candidate)
 {
-    officialCandidates.push_back(candidate);
-    candidates.push_back(candidate);
+    theCandidates.add(candidate);
     votes.push_back(0);
 }
 
 void ElectionsWithoutDistricts::recordVote(const string &candidate)
 {
-    const bool candidateFoundInCandidates = (count(candidates.begin(), candidates.end(), candidate) > 0);
-    if (candidateFoundInCandidates)
+    if (theCandidates.exists(candidate))
     {
         recordVoteForExistingCandidate(candidate);
     }
@@ -23,13 +21,13 @@ void ElectionsWithoutDistricts::recordVote(const string &candidate)
 
 void ElectionsWithoutDistricts::recordVoteForExistingCandidate(const string &candidate)
 {
-    int index = find(candidates.begin(), candidates.end(), candidate) - candidates.begin();
+    int index = theCandidates.indexOf(candidate);
     votes[index] = votes[index] + 1;
 }
 
 void ElectionsWithoutDistricts::recordVoteForNewCandidate(const string &candidate)
 {
-    candidates.push_back(candidate);
+    theCandidates.addUnofficialCandidate(candidate);
     votes.push_back(1);
 }
 
@@ -44,9 +42,9 @@ map<string, string> ElectionsWithoutDistricts::results() const
 
     for (int i = 0; i < votes.size(); i++)
     {
-        string candidate = candidates[i];
-        const bool isValidCandidate = (count(officialCandidates.begin(), officialCandidates.end(), candidate) > 0);
-        const bool voteIsBlank = (candidates[i].size() == 0);
+        string candidate = theCandidates.get(i);
+        const bool isValidCandidate = theCandidates.isValidCandidate(candidate);
+        const bool voteIsBlank = theCandidates.isBlank(i);
 
         if (isValidCandidate)
             results[candidate] = electionResultsFormatter.formatResult(votes[i], nbValidVotes);
@@ -71,9 +69,9 @@ int ElectionsWithoutDistricts::totalNumberOfVotes() const
 int ElectionsWithoutDistricts::numberOfValidVotes() const
 {
     int nbValidVotes = 0;
-    for (int i = 0; i < officialCandidates.size(); i++)
+    for (int i = 0; i < theCandidates.getOfficialCandidates().size(); i++)
     {
-        int index = find(candidates.begin(), candidates.end(), officialCandidates[i]) - candidates.begin();
+        int index = theCandidates.indexOfOfficialCandidateInCandidates(i);
         nbValidVotes += votes[index];
     }
 
