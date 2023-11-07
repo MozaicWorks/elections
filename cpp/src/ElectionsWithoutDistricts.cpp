@@ -1,3 +1,4 @@
+#include "Electors.h"
 #include "ElectionsWithoutDistricts.h"
 
 void ElectionsWithoutDistricts::addCandidate(const string &candidate)
@@ -64,7 +65,7 @@ map<string, string> ElectionsWithoutDistricts::results() const
     }
     results["Blank"] = electionResultsFormatter.formatResult(blankVotes, nbVotes);
     results["Null"] = electionResultsFormatter.formatResult(nullVotes, nbVotes);
-    results["Abstention"] = electionResultsFormatter.formatAbstentions(electorsByDistrict, nbVotes);
+    results["Abstention"] = electionResultsFormatter.formatAbstentions(nbVotes, Electors(electorsByDistrict).count());
     return results;
 }
 
