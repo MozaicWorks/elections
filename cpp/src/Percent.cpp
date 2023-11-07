@@ -5,6 +5,9 @@
 
 float Percent::value() const
 {
+    if(total == 0)
+        return 0;
+
     return ((float)partial * 100) / total;
 }
 
