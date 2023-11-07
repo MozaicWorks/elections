@@ -88,6 +88,7 @@ map<string, string> ElectionsWithDistricts::results() const
     {
         officialCandidatesResult[candidates[i]] = 0;
     }
+
     for (auto entry : votes)
     {
         vector<float> districtResult;
@@ -97,23 +98,20 @@ map<string, string> ElectionsWithDistricts::results() const
             float candidateResult = 0;
             if (nbValidVotes != 0)
                 candidateResult = ((float)districtVotes[i] * 100) / nbValidVotes;
+
             string candidate = candidates[i];
-            if (count(officialCandidates.begin(), officialCandidates.end(), candidate) > 0)
-            {
+            const bool isValidCandidate = (count(officialCandidates.begin(), officialCandidates.end(), candidate) > 0);
+            const bool isBlankVote = (candidates[i].size() == 0);
+            if (isValidCandidate)
                 districtResult.push_back(candidateResult);
-            }
-            else
-            {
-                if (candidates[i].size() == 0)
-                {
-                    blankVotes += districtVotes[i];
-                }
-                else
-                {
-                    nullVotes += districtVotes[i];
-                }
-            }
+
+            if (!isValidCandidate && isBlankVote)
+                blankVotes += districtVotes[i];
+
+            if (!isValidCandidate && !isBlankVote)
+                nullVotes += districtVotes[i];
         }
+
         int districtWinnerIndex = 0;
         for (int i = 1; i < districtResult.size(); i++)
         {
