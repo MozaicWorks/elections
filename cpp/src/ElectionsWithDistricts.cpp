@@ -8,6 +8,7 @@ void ElectionsWithDistricts::addCandidate(const string &candidate)
 {
     officialCandidates.push_back(candidate);
     candidates.push_back(candidate);
+    theCandidates.add(candidate);
     votes["District 1"].push_back(0);
     votes["District 2"].push_back(0);
     votes["District 3"].push_back(0);
@@ -16,23 +17,26 @@ void ElectionsWithDistricts::addCandidate(const string &candidate)
 void ElectionsWithDistricts::recordVoteForExistingCandidate(const string &candidate, vector<int> &districtVotes) const
 {
     int index = find(candidates.begin(), candidates.end(), candidate) - candidates.begin();
+    // index = theCandidates.indexOf(candidate);
     districtVotes[index] = districtVotes[index] + 1;
 }
 
 void ElectionsWithDistricts::recordVoteForNewCandidate(const string &candidate, vector<int> &districtVotes)
 {
     candidates.push_back(candidate);
+    theCandidates.addUnofficialCandidate(candidate);
     for (auto &[district, votes] : votes)
     {
         votes.push_back(0);
     }
-    districtVotes[candidates.size() - 1] = districtVotes[candidates.size() - 1] + 1;
+    int size = theCandidates.howManyCandidates();
+    districtVotes[size - 1] = districtVotes[size - 1] + 1;
 }
 
 void ElectionsWithDistricts::recordVote(const string &candidate, const string &electorDistrict)
 {
     vector<int> &districtVotes = votes[electorDistrict];
-    const bool candidateFoundInCandidates = (count(candidates.begin(), candidates.end(), candidate) > 0);
+    const bool candidateFoundInCandidates = theCandidates.exists(candidate);
 
     if (candidateFoundInCandidates)
     {
@@ -60,9 +64,9 @@ int ElectionsWithDistricts::totalNumberOfVotes() const
 int ElectionsWithDistricts::numberOfValidVotes() const
 {
     int nbValidVotes = 0;
-    for (int i = 0; i < officialCandidates.size(); i++)
+    for (int i = 0; i < theCandidates.howManyOfficialCandidates(); i++)
     {
-        int index = find(candidates.begin(), candidates.end(), officialCandidates[i]) - candidates.begin();
+        int index = theCandidates.indexOfOfficialCandidateInCandidates(i);
         for (auto entry : votes)
         {
             vector<int> districtVotes = entry.second;
@@ -86,7 +90,7 @@ map<string, string> ElectionsWithDistricts::results() const
     map<string, int> officialCandidatesResult;
     for (int i = 0; i < officialCandidates.size(); i++)
     {
-        officialCandidatesResult[candidates[i]] = 0;
+        officialCandidatesResult[theCandidates.get(i)] = 0;
     }
 
     for (auto entry : votes)
@@ -99,9 +103,9 @@ map<string, string> ElectionsWithDistricts::results() const
             if (nbValidVotes != 0)
                 candidateResult = ((float)districtVotes[i] * 100) / nbValidVotes;
 
-            string candidate = candidates[i];
-            const bool isValidCandidate = (count(officialCandidates.begin(), officialCandidates.end(), candidate) > 0);
-            const bool isBlankVote = (candidates[i].size() == 0);
+            string candidate = theCandidates.get(i);
+            const bool isValidCandidate = theCandidates.isValidCandidate(candidate);
+            const bool isBlankVote = theCandidates.isBlank(i);
             if (isValidCandidate)
                 districtResult.push_back(candidateResult);
 

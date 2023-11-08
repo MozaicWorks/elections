@@ -4,6 +4,7 @@
 #include <sstream>
 #include <iomanip>
 
+#include "Candidates.h"
 #include "ElectionResultsFormatter.h"
 
 using namespace std;
@@ -17,9 +18,10 @@ private:
 
     const ElectionResultsFormatter electionResultsFormatter;
     Electors electors;
+    Candidates theCandidates;
 
 public:
-    ElectionsWithDistricts(Electors electors) : candidates{}, officialCandidates{}, votes{}, electionResultsFormatter{}, electors(electors){};
+    ElectionsWithDistricts(Electors electors) : candidates{}, officialCandidates{}, votes{}, electionResultsFormatter{}, electors(electors), theCandidates{} {};
 
     void addCandidate(const string &);
     void recordVote(const string &, const string &);

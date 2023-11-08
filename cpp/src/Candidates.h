@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include <vector>
 
@@ -23,12 +24,12 @@ public:
         candidates.push_back(candidateName);
     }
 
-    bool exists(const string &candidateName)
+    bool exists(const string &candidateName) const
     {
         return (count(candidates.begin(), candidates.end(), candidateName) > 0);
     }
 
-    int indexOf(const string &candidateName)
+    int indexOf(const string &candidateName) const
     {
         return find(candidates.begin(), candidates.end(), candidateName) - candidates.begin();
     }
@@ -52,6 +53,11 @@ public:
     int howManyOfficialCandidates() const
     {
         return officialCandidates.size();
+    }
+
+    int howManyCandidates() const
+    {
+        return candidates.size();
     }
 
     bool isBlank(const int candidateIndex) const
