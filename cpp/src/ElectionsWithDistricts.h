@@ -12,8 +12,6 @@ using namespace std;
 class ElectionsWithDistricts
 {
 private:
-    vector<string> candidates;
-    vector<string> officialCandidates;
     map<string, vector<int>> votes;
 
     const ElectionResultsFormatter electionResultsFormatter;
@@ -21,7 +19,7 @@ private:
     Candidates theCandidates;
 
 public:
-    ElectionsWithDistricts(Electors electors) : candidates{}, officialCandidates{}, votes{}, electionResultsFormatter{}, electors(electors), theCandidates{} {};
+    ElectionsWithDistricts(Electors electors) : votes{}, electionResultsFormatter{}, electors(electors), theCandidates{} {};
 
     void addCandidate(const string &);
     void recordVote(const string &, const string &);

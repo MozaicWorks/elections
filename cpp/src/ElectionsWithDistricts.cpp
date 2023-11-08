@@ -6,8 +6,6 @@
 
 void ElectionsWithDistricts::addCandidate(const string &candidate)
 {
-    officialCandidates.push_back(candidate);
-    candidates.push_back(candidate);
     theCandidates.add(candidate);
     votes["District 1"].push_back(0);
     votes["District 2"].push_back(0);
@@ -16,14 +14,12 @@ void ElectionsWithDistricts::addCandidate(const string &candidate)
 
 void ElectionsWithDistricts::recordVoteForExistingCandidate(const string &candidate, vector<int> &districtVotes) const
 {
-    int index = find(candidates.begin(), candidates.end(), candidate) - candidates.begin();
-    // index = theCandidates.indexOf(candidate);
+    int index = theCandidates.indexOf(candidate);
     districtVotes[index] = districtVotes[index] + 1;
 }
 
 void ElectionsWithDistricts::recordVoteForNewCandidate(const string &candidate, vector<int> &districtVotes)
 {
-    candidates.push_back(candidate);
     theCandidates.addUnofficialCandidate(candidate);
     for (auto &[district, votes] : votes)
     {
@@ -88,7 +84,7 @@ map<string, string> ElectionsWithDistricts::results() const
     nbValidVotes = numberOfValidVotes();
 
     map<string, int> officialCandidatesResult;
-    for (int i = 0; i < officialCandidates.size(); i++)
+    for (int i = 0; i < theCandidates.howManyOfficialCandidates(); i++)
     {
         officialCandidatesResult[theCandidates.get(i)] = 0;
     }
@@ -122,11 +118,13 @@ map<string, string> ElectionsWithDistricts::results() const
             if (districtResult[districtWinnerIndex] < districtResult[i])
                 districtWinnerIndex = i;
         }
-        officialCandidatesResult[candidates[districtWinnerIndex]] = officialCandidatesResult[candidates[districtWinnerIndex]] + 1;
+        const string candidateName = theCandidates.get(districtWinnerIndex);
+        officialCandidatesResult[candidateName] = officialCandidatesResult[candidateName] + 1;
     }
     for (int i = 0; i < officialCandidatesResult.size(); i++)
     {
-        results[candidates[i]] = electionResultsFormatter.formatResult(officialCandidatesResult[candidates[i]], officialCandidatesResult.size());
+        const string candidateName = theCandidates.get(i);
+        results[candidateName] = electionResultsFormatter.formatResult(officialCandidatesResult[candidateName], officialCandidatesResult.size());
     }
     results["Blank"] = electionResultsFormatter.formatResult(blankVotes, nbVotes);
     results["Null"] = electionResultsFormatter.formatResult(nullVotes, nbVotes);
