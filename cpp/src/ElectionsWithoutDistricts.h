@@ -18,10 +18,10 @@ private:
     const ElectionResultsFormatter electionResultsFormatter;
     Electors electors;
     Candidates candidates;
-    Votes theVotes;
+    Votes votes;
 
 public:
-    ElectionsWithoutDistricts(Electors electors) : theVotes{}, electors(electors), electionResultsFormatter{}, candidates{} {};
+    ElectionsWithoutDistricts(Electors electors) : votes{}, electors(electors), electionResultsFormatter{}, candidates{} {};
 
     void addCandidate(const string &);
     void recordVote(const string &);

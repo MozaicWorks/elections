@@ -5,7 +5,7 @@ void ElectionsWithoutDistricts::addCandidate(const string &candidate)
 {
     candidates.add(candidate);
 
-    theVotes.initializeVotesForCandidate();
+    votes.initializeVotesForCandidate();
 }
 
 void ElectionsWithoutDistricts::recordVote(const string &candidate)
@@ -23,30 +23,30 @@ void ElectionsWithoutDistricts::recordVote(const string &candidate)
 void ElectionsWithoutDistricts::recordVoteForExistingCandidate(const string &candidate)
 {
     int index = candidates.indexOf(candidate);
-    theVotes.recordVoteForExistingCandidate(index);
+    votes.recordVoteForExistingCandidate(index);
 }
 
 void ElectionsWithoutDistricts::recordVoteForNewCandidate(const string &candidate)
 {
     candidates.addUnofficialCandidate(candidate);
-    theVotes.recordVoteForNewCandidate();
+    votes.recordVoteForNewCandidate();
 }
 
 map<string, string> ElectionsWithoutDistricts::results() const
 {
-    const int nbVotes = theVotes.totalNumberOfVotes();
+    const int nbVotes = votes.totalNumberOfVotes();
     const int nbValidVotes = numberOfValidVotes();
 
     map<string, string> results;
     int nullVotes = 0;
     int blankVotes = 0;
 
-    for (int i = 0; i < theVotes.size(); i++)
+    for (int i = 0; i < votes.size(); i++)
     {
         string candidate = candidates.get(i);
         const bool isValidCandidate = candidates.isValidCandidate(candidate);
         const bool voteIsBlank = candidates.isBlank(i);
-        const int votesAtIndex = theVotes.get(i);
+        const int votesAtIndex = votes.get(i);
 
         if (isValidCandidate)
             results[candidate] = electionResultsFormatter.formatResult(votesAtIndex, nbValidVotes);
@@ -69,7 +69,7 @@ int ElectionsWithoutDistricts::numberOfValidVotes() const
     for (int i = 0; i < candidates.howManyOfficialCandidates(); i++)
     {
         int index = candidates.indexOfOfficialCandidateInCandidates(i);
-        nbValidVotes += theVotes.get(index);
+        nbValidVotes += votes.get(index);
     }
 
     return nbValidVotes;
