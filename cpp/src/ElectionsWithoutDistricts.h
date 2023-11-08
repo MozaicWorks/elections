@@ -17,10 +17,10 @@ private:
     vector<int> votes;
     const ElectionResultsFormatter electionResultsFormatter;
     Electors electors;
-    Candidates theCandidates;
+    Candidates candidates;
 
 public:
-    ElectionsWithoutDistricts(Electors electors) : votes{}, electors(electors), electionResultsFormatter{}, theCandidates{} {};
+    ElectionsWithoutDistricts(Electors electors) : votes{}, electors(electors), electionResultsFormatter{}, candidates{} {};
 
     void addCandidate(const string &);
     void recordVote(const string &);

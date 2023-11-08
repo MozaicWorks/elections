@@ -3,13 +3,13 @@
 
 void ElectionsWithoutDistricts::addCandidate(const string &candidate)
 {
-    theCandidates.add(candidate);
+    candidates.add(candidate);
     votes.push_back(0);
 }
 
 void ElectionsWithoutDistricts::recordVote(const string &candidate)
 {
-    if (theCandidates.exists(candidate))
+    if (candidates.exists(candidate))
     {
         recordVoteForExistingCandidate(candidate);
     }
@@ -21,13 +21,13 @@ void ElectionsWithoutDistricts::recordVote(const string &candidate)
 
 void ElectionsWithoutDistricts::recordVoteForExistingCandidate(const string &candidate)
 {
-    int index = theCandidates.indexOf(candidate);
+    int index = candidates.indexOf(candidate);
     votes[index] = votes[index] + 1;
 }
 
 void ElectionsWithoutDistricts::recordVoteForNewCandidate(const string &candidate)
 {
-    theCandidates.addUnofficialCandidate(candidate);
+    candidates.addUnofficialCandidate(candidate);
     votes.push_back(1);
 }
 
@@ -42,9 +42,9 @@ map<string, string> ElectionsWithoutDistricts::results() const
 
     for (int i = 0; i < votes.size(); i++)
     {
-        string candidate = theCandidates.get(i);
-        const bool isValidCandidate = theCandidates.isValidCandidate(candidate);
-        const bool voteIsBlank = theCandidates.isBlank(i);
+        string candidate = candidates.get(i);
+        const bool isValidCandidate = candidates.isValidCandidate(candidate);
+        const bool voteIsBlank = candidates.isBlank(i);
 
         if (isValidCandidate)
             results[candidate] = electionResultsFormatter.formatResult(votes[i], nbValidVotes);
@@ -69,9 +69,9 @@ int ElectionsWithoutDistricts::totalNumberOfVotes() const
 int ElectionsWithoutDistricts::numberOfValidVotes() const
 {
     int nbValidVotes = 0;
-    for (int i = 0; i < theCandidates.howManyOfficialCandidates(); i++)
+    for (int i = 0; i < candidates.howManyOfficialCandidates(); i++)
     {
-        int index = theCandidates.indexOfOfficialCandidateInCandidates(i);
+        int index = candidates.indexOfOfficialCandidateInCandidates(i);
         nbValidVotes += votes[index];
     }
 
