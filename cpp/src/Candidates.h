@@ -64,4 +64,15 @@ public:
     {
         return (candidates[candidateIndex].size() == 0);
     }
+
+    vector<int> indexesOfOfficialCandidates() const
+    {
+        vector<int> indexesOfOfficialCandidates;
+        for (int i = 0; i < howManyOfficialCandidates(); i++)
+        {
+            int index = indexOfOfficialCandidateInCandidates(i);
+            indexesOfOfficialCandidates.push_back(index);
+        }
+        return indexesOfOfficialCandidates;
+    }
 };

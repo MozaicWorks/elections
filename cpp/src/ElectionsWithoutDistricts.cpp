@@ -65,12 +65,6 @@ map<string, string> ElectionsWithoutDistricts::results() const
 
 int ElectionsWithoutDistricts::numberOfValidVotes() const
 {
-    int nbValidVotes = 0;
-    for (int i = 0; i < candidates.howManyOfficialCandidates(); i++)
-    {
-        int index = candidates.indexOfOfficialCandidateInCandidates(i);
-        nbValidVotes += votes.get(index);
-    }
-
-    return nbValidVotes;
+    vector<int> indexesOfOfficialCandidates = candidates.indexesOfOfficialCandidates();
+    return votes.countValidVotes(indexesOfOfficialCandidates);
 }

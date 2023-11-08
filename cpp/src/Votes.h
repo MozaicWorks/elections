@@ -42,4 +42,14 @@ public:
     {
         return votes.size();
     }
+
+    int countValidVotes(vector<int> indexesOfOfficialCandidates) const
+    {
+        int nbValidVotes = 0;
+        for (int indexOfOfficialCandidate : indexesOfOfficialCandidates)
+        {
+            nbValidVotes += get(indexOfOfficialCandidate);
+        }
+        return nbValidVotes;
+    }
 };
