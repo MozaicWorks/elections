@@ -7,6 +7,7 @@
 #include <iomanip>
 
 #include "Candidates.h"
+#include "Votes.h"
 #include "ElectionResultsFormatter.h"
 
 using namespace std;
@@ -14,13 +15,13 @@ using namespace std;
 class ElectionsWithoutDistricts
 {
 private:
-    vector<int> votes;
     const ElectionResultsFormatter electionResultsFormatter;
     Electors electors;
     Candidates candidates;
+    Votes theVotes;
 
 public:
-    ElectionsWithoutDistricts(Electors electors) : votes{}, electors(electors), electionResultsFormatter{}, candidates{} {};
+    ElectionsWithoutDistricts(Electors electors) : theVotes{}, electors(electors), electionResultsFormatter{}, candidates{} {};
 
     void addCandidate(const string &);
     void recordVote(const string &);
@@ -30,6 +31,5 @@ private:
     void recordVoteForExistingCandidate(const string &);
     void recordVoteForNewCandidate(const string &);
 
-    int totalNumberOfVotes() const;
     int numberOfValidVotes() const;
 };

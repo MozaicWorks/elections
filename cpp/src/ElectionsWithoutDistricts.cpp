@@ -4,7 +4,8 @@
 void ElectionsWithoutDistricts::addCandidate(const string &candidate)
 {
     candidates.add(candidate);
-    votes.push_back(0);
+
+    theVotes.initializeVotesForCandidate();
 }
 
 void ElectionsWithoutDistricts::recordVote(const string &candidate)
@@ -22,48 +23,44 @@ void ElectionsWithoutDistricts::recordVote(const string &candidate)
 void ElectionsWithoutDistricts::recordVoteForExistingCandidate(const string &candidate)
 {
     int index = candidates.indexOf(candidate);
-    votes[index] = votes[index] + 1;
+    theVotes.recordVoteForExistingCandidate(index);
 }
 
 void ElectionsWithoutDistricts::recordVoteForNewCandidate(const string &candidate)
 {
     candidates.addUnofficialCandidate(candidate);
-    votes.push_back(1);
+    theVotes.recordVoteForNewCandidate();
 }
 
 map<string, string> ElectionsWithoutDistricts::results() const
 {
-    const int nbVotes = totalNumberOfVotes();
+    const int nbVotes = theVotes.totalNumberOfVotes();
     const int nbValidVotes = numberOfValidVotes();
 
     map<string, string> results;
     int nullVotes = 0;
     int blankVotes = 0;
 
-    for (int i = 0; i < votes.size(); i++)
+    for (int i = 0; i < theVotes.size(); i++)
     {
         string candidate = candidates.get(i);
         const bool isValidCandidate = candidates.isValidCandidate(candidate);
         const bool voteIsBlank = candidates.isBlank(i);
+        const int votesAtIndex = theVotes.get(i);
 
         if (isValidCandidate)
-            results[candidate] = electionResultsFormatter.formatResult(votes[i], nbValidVotes);
+            results[candidate] = electionResultsFormatter.formatResult(votesAtIndex, nbValidVotes);
 
         if (!isValidCandidate && voteIsBlank)
-            blankVotes += votes[i];
+            blankVotes += votesAtIndex;
 
         if (!isValidCandidate && !voteIsBlank)
-            nullVotes += votes[i];
+            nullVotes += votesAtIndex;
     }
     results["Blank"] = electionResultsFormatter.formatResult(blankVotes, nbVotes);
     results["Null"] = electionResultsFormatter.formatResult(nullVotes, nbVotes);
     results["Abstention"] = electionResultsFormatter.formatAbstentions(nbVotes, electors.count());
     return results;
-}
-
-int ElectionsWithoutDistricts::totalNumberOfVotes() const
-{
-    return accumulate(votes.begin(), votes.end(), 0);
 }
 
 int ElectionsWithoutDistricts::numberOfValidVotes() const
@@ -72,7 +69,7 @@ int ElectionsWithoutDistricts::numberOfValidVotes() const
     for (int i = 0; i < candidates.howManyOfficialCandidates(); i++)
     {
         int index = candidates.indexOfOfficialCandidateInCandidates(i);
-        nbValidVotes += votes[index];
+        nbValidVotes += theVotes.get(index);
     }
 
     return nbValidVotes;
