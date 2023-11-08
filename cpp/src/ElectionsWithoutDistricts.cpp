@@ -69,7 +69,7 @@ int ElectionsWithoutDistricts::totalNumberOfVotes() const
 int ElectionsWithoutDistricts::numberOfValidVotes() const
 {
     int nbValidVotes = 0;
-    for (int i = 0; i < theCandidates.getOfficialCandidates().size(); i++)
+    for (int i = 0; i < theCandidates.howManyOfficialCandidates(); i++)
     {
         int index = theCandidates.indexOfOfficialCandidateInCandidates(i);
         nbValidVotes += votes[index];

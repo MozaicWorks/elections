@@ -12,11 +12,6 @@ private:
 public:
     Candidates() : officialCandidates{}, candidates{} {}
 
-    vector<string> getOfficialCandidates() const
-    {
-        return officialCandidates;
-    }
-
     void add(const string &candidateName)
     {
         officialCandidates.push_back(candidateName);
@@ -52,6 +47,11 @@ public:
     {
         const string officialCandidateName = officialCandidates[indexOfOfficialCandidate];
         return find(candidates.begin(), candidates.end(), officialCandidateName) - candidates.begin();
+    }
+
+    int howManyOfficialCandidates() const
+    {
+        return officialCandidates.size();
     }
 
     bool isBlank(const int candidateIndex) const
